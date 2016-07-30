@@ -86,8 +86,11 @@ public class Group : MonoBehaviour
 
         // See if valid
         if (IsValidGridPos())
+        {
             // Its valid. Update grid.
             UpdateGrid();
+            GameHelper.PlayMoveSound();
+        }
         else
         // Its not valid. revert.
             transform.position = oldPosition;
@@ -99,10 +102,13 @@ public class Group : MonoBehaviour
 
         // See if valid
         if (IsValidGridPos())
+        {
             // It's valid. Update grid.
             UpdateGrid();
+            GameHelper.PlayFlipSound();
+        }
         else
-            // It's not valid. revert.
+        // It's not valid. revert.
             transform.Rotate(0, 0, 90);
     }
 
@@ -119,6 +125,7 @@ public class Group : MonoBehaviour
 
         else
         {
+            GameHelper.PlayLandSound();
             transform.position += new Vector3(0, 1, 0);
             Grid.DeleteFullRows();
             FindObjectOfType<Spawner>().SpawnNext();
