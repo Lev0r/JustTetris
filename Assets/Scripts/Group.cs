@@ -4,8 +4,12 @@ using System.Collections;
 public class Group : MonoBehaviour
 {
     private bool _isDownPressedAfterSpawn;
+    private float _leftAtTime;
+    private float _rightAtTime;
     // Time since last gravity tick
     float lastFall = 0;
+
+    public float HoldButtonDelay;
 
     // Use this for initialization
     void Start()
@@ -20,17 +24,29 @@ public class Group : MonoBehaviour
 	
 	// Update is called once per frame
     void Update()
-    {        
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+    {
+        if (Input.GetKeyUp(KeyCode.LeftArrow))
+            _leftAtTime = -1f;
+
+        if (Input.GetKeyUp(KeyCode.RightArrow))
+            _rightAtTime = -1f;
+
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
             TryToMoveGroup(-1, 0, 0);
+            _leftAtTime = Time.time;
+        }
 
         else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
             TryToMoveGroup(1, 0, 0);
+            _rightAtTime = Time.time;
+        }
 
         else if (Input.GetKeyDown(KeyCode.UpArrow))
             TryToRotateGroup(-90);
 
-        else if ( Time.time - lastFall >= 0.7)
+        else if (Time.time - lastFall >= 0.7)
             TryToMoveGroupDown();
 
         else if (Input.GetKeyDown(KeyCode.DownArrow))
@@ -38,8 +54,22 @@ public class Group : MonoBehaviour
 
         else if (Input.GetKey(KeyCode.DownArrow))
         {
-            if(_isDownPressedAfterSpawn)
+            if (_isDownPressedAfterSpawn)
                 TryToMoveGroupDown();
+        }
+        else if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            if (_leftAtTime > 0 && _leftAtTime + HoldButtonDelay < Time.time)
+            {
+                TryToMoveGroup(-1, 0, 0);
+            }
+        }
+        else if (Input.GetKey(KeyCode.RightArrow))
+        {
+            if (_rightAtTime > 0 && _rightAtTime + HoldButtonDelay < Time.time)
+            {
+                TryToMoveGroup(1, 0, 0);
+            }
         }
 
     }
@@ -133,6 +163,8 @@ public class Group : MonoBehaviour
             lastFall = Time.time;
 
             _isDownPressedAfterSpawn = false;
+            _leftAtTime = -1f;
+            _rightAtTime = -1f;
             return false;
         }        
     }
