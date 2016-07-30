@@ -1,33 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Grid : MonoBehaviour
+public class Grid : Singleton<Grid>
 {
-    public static int Width = 10;
-    public static int Height = 20;
+    public const int Width = 10;
+    public const int Height = 20;
     
-    public static Transform[,] grid = new Transform[Width, Height];
+    public Transform[,] grid = new Transform[Width, Height];
 
-	// Use this for initialization
-	void Start () { }
-	
-	// Update is called once per frame
-	void Update () { }
-
-    public static Vector2 RoundVec2(Vector2 v)
+    public Vector2 RoundVec2(Vector2 v)
     {
         return new Vector2(Mathf.Round(v.x),
                            Mathf.Round(v.y));
     }
 
-    public static bool IsInsideBorder(Vector2 pos)
+    public bool IsInsideBorder(Vector2 pos)
     {
         return ((int)pos.x >= 0 &&
                 (int)pos.x < Width &&
                 (int)pos.y >= 0);
     }
 
-    public static void DeleteRow(int y)
+    public void DeleteRow(int y)
     {
         for (int x = 0; x < Width; ++x)
         {
@@ -36,7 +30,7 @@ public class Grid : MonoBehaviour
         }
     }
 
-    public static void DecreaseRow(int y)
+    public void DecreaseRow(int y)
     {
         for (int x = 0; x < Width; ++x)
         {
@@ -52,13 +46,13 @@ public class Grid : MonoBehaviour
         }
     }
 
-    public static void DecreaseRowsAbove(int y)
+    public void DecreaseRowsAbove(int y)
     {
         for (int i = y; i < Height; ++i)
             DecreaseRow(i);
     }
 
-    public static bool IsRowFull(int y)
+    public bool IsRowFull(int y)
     {
         for (int x = 0; x < Width; ++x)
             if (grid[x, y] == null)
@@ -66,7 +60,7 @@ public class Grid : MonoBehaviour
         return true;
     }
 
-    public static void DeleteFullRows()
+    public void DeleteFullRows()
     {
         for (int y = 0; y < Height; ++y)
         {
@@ -78,5 +72,11 @@ public class Grid : MonoBehaviour
                 --y;
             }
         }
+    }
+
+    IEnumerator DestroyCell(int x, int y)
+    {                
+        
+        yield return new WaitForSeconds(0.2f);
     }
 }

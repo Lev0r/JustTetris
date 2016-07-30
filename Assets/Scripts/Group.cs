@@ -19,10 +19,10 @@ public class Group : MonoBehaviour
         {
             Debug.Log("GAME OVER");
             Destroy(gameObject);
-        }
+        }        
     }
-	
-	// Update is called once per frame
+
+    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyUp(KeyCode.LeftArrow))
@@ -78,15 +78,15 @@ public class Group : MonoBehaviour
     {
         foreach (Transform child in transform)
         {
-            Vector2 v = Grid.RoundVec2(child.position);
+            Vector2 v = Grid.Instance.RoundVec2(child.position);
 
             // Not inside Border?
-            if (!Grid.IsInsideBorder(v))
+            if (!Grid.Instance.IsInsideBorder(v))
                 return false;
 
             // Block in grid cell (and not part of same group)?
-            if (Grid.grid[(int)v.x, (int)v.y] != null &&
-                Grid.grid[(int)v.x, (int)v.y].parent != transform)
+            if (Grid.Instance.grid[(int)v.x, (int)v.y] != null &&
+                Grid.Instance.grid[(int)v.x, (int)v.y].parent != transform)
                 return false;
         }
         return true;
@@ -97,15 +97,15 @@ public class Group : MonoBehaviour
         // Remove old children from grid
         for (int y = 0; y < Grid.Height; ++y)
             for (int x = 0; x < Grid.Width; ++x)
-                if (Grid.grid[x, y] != null)
-                    if (Grid.grid[x, y].parent == transform)
-                        Grid.grid[x, y] = null;
+                if (Grid.Instance.grid[x, y] != null)
+                    if (Grid.Instance.grid[x, y].parent == transform)
+                        Grid.Instance.grid[x, y] = null;
 
         // Add new children to grid
         foreach (Transform child in transform)
         {
-            Vector2 v = Grid.RoundVec2(child.position);
-            Grid.grid[(int)v.x, (int)v.y] = child;
+            Vector2 v = Grid.Instance.RoundVec2(child.position);
+            Grid.Instance.grid[(int)v.x, (int)v.y] = child;
         }
     }
 
@@ -157,7 +157,7 @@ public class Group : MonoBehaviour
         {
             GameHelper.PlayLandSound();
             transform.position += new Vector3(0, 1, 0);
-            Grid.DeleteFullRows();
+            Grid.Instance.DeleteFullRows();
             FindObjectOfType<Spawner>().SpawnNext();
             enabled = false;
             lastFall = Time.time;
