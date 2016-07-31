@@ -67,16 +67,11 @@ public class Grid : Singleton<Grid>
             if (IsRowFull(y))
             {
                 GameHelper.PlayFullRawSound();
+                GameHelper.IncreaseScore();
                 DeleteRow(y);
                 DecreaseRowsAbove(y + 1);
                 --y;
             }
         }
-    }
-
-    IEnumerator DestroyCell(int x, int y)
-    {                
-        
-        yield return new WaitForSeconds(0.2f);
     }
 }

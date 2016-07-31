@@ -21,6 +21,9 @@ public class GameHelper : MonoBehaviour
     private static float _willPlayTillTime;
     private static int _currentSoundPriority;
 
+    public Rect ScorePosition;
+    private static int _score = 0;
+    public GUISkin ScoreboardSkin;
 
     void Awake()
     {        
@@ -65,5 +68,16 @@ public class GameHelper : MonoBehaviour
             _audioSource.PlayOneShot(sound, volume);
             _willPlayTillTime = Time.time + duration;
         }
+    }
+
+    public static void IncreaseScore()
+    {
+        _score ++;
+    }
+
+    void OnGUI()
+    {
+        GUI.skin = ScoreboardSkin;
+        GUI.Label(ScorePosition, "Score: " + _score);
     }
 }

@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: ff00ba06d4ea1bc4ca9e7907db3ce5d6
+timeCreated: 1469976513
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - From Cartoon Blocks
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
