@@ -25,6 +25,9 @@ public class GameHelper : MonoBehaviour
     private static int _score = 0;
     public GUISkin ScoreboardSkin;
 
+    public static float GameSpeed = 0.9f;
+    private const float gameSpeedStep = 0.07f;
+
     void Awake()
     {        
         _fullRowSound = FullRowSound;
@@ -73,6 +76,8 @@ public class GameHelper : MonoBehaviour
     public static void IncreaseScore()
     {
         _score ++;
+        if(_score % 5 == 0)
+            GameSpeed -= gameSpeedStep;
     }
 
     void OnGUI()

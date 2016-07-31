@@ -44,10 +44,7 @@ public class Group : MonoBehaviour
         }
 
         else if (Input.GetKeyDown(KeyCode.UpArrow))
-            TryToRotateGroup(-90);
-
-        else if (Time.time - lastFall >= 0.7)
-            TryToMoveGroupDown();
+            TryToRotateGroup(-90);        
 
         else if (Input.GetKeyDown(KeyCode.DownArrow))
             _isDownPressedAfterSpawn = true;
@@ -71,6 +68,9 @@ public class Group : MonoBehaviour
                 TryToMoveGroup(1, 0, 0);
             }
         }
+
+        else if (Time.time - lastFall >= GameHelper.GameSpeed)
+            TryToMoveGroupDown();
 
     }
 
