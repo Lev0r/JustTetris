@@ -77,7 +77,11 @@ public class GameHelper : MonoBehaviour
 
     void OnGUI()
     {
+        var w = Screen.width/100;
+        var h = Screen.height/100;
         GUI.skin = ScoreboardSkin;
-        GUI.Label(ScorePosition, "Score: " + _score);
+        GUI.Label(
+            new Rect(ScorePosition.x*w, ScorePosition.y*h, ScorePosition.width*w, ScorePosition.height*h),
+            "Score: " + _score);
     }
 }
